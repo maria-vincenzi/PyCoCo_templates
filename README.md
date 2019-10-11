@@ -8,7 +8,9 @@ You will need:
 - The Pakcage george (version 0.3.1 at least, https://george.readthedocs.io/en/latest/)
 ## Build your own template: Instructions
 Take a look at Figure 1 in the Paper.
-    ![Image description](./pycoco_code_structure.pdf)
+
+![[Optional Text]](./pycoco_code_structure.pdf)
+
 Each step of the process corresponds to a jupyter notebook in the folder ./Codes.
 
 0. Clone this github repo and set the envoimental variable COCO_PATH to the path where you cloned the folder
