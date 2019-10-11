@@ -8,10 +8,10 @@ You will need:
 - The Pakcage george (version 0.3.1 at least, https://george.readthedocs.io/en/latest/)
 ## Build your own template: Instructions
 
-*STEP 0*: Clone this github repo and set the envoimental variable COCO_PATH to the path where you cloned the folder
+**STEP 0**: Clone this github repo and set the envoimental variable COCO_PATH to the path where you cloned the folder
 i.e. export COCO_PATH="/Users/mariavincenzi/PyCoCo_templates/"
 
-*STEP 1*
+**STEP 1**:
 
 All the inputs (Photometry, Spectroscopy, Other info about the transient like Galactic/host extinction, Redshift...), Filter transmission function) should be placed in ./Inputs
 See example provided to check which format all these info should be provided.
@@ -20,5 +20,5 @@ All the outputs (LC fit, mangled spectra, various plots and final template) will
 
 Take a look at Figure 1 in the Paper.
 Each step of the process corresponds to a jupyter notebook in the folder ./Codes.
-![Imgur](pycoco_code_structure.png | width=48)
+![Imgur](pycoco_code_structure.png)
 
