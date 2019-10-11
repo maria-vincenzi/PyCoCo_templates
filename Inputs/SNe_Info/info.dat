@@ -4,5 +4,5 @@
 ## Type: sub-type of the SN. Must be one of [II, IIb, IIn, Ib, Ic, Ic-BL] (following Li et al. 2011 classification scheme)
 ## Rich_Type: sub-type of the SN. Must be one of [IIL, IIP, IIb, IIn, Ib, Ic, Ic-BL] (following Richardson et al. 2014 classification scheme)
 #
-#snname z_obs RA Dec FullType Type Rich_Type EBV_host
-iPTF13bvn 0.00449 15:00:00.15 +01:52:53.17 Ib Ib Ib 0.17
+Name z RA Dec FullType Type Rich_Type EBV_MW EBV_host
+iPTF13bvn 0.00449 15:00:00.15 +01:52:53.17 Ib Ib Ib 0.051 0.17

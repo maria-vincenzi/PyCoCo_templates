@@ -1,7 +1,7 @@
 # PyCoCo_templates
-Building templates of Core Collapse SNe
-References:
+Building templates of ANY transient for which you have photomtry and sparse spectroscopy
 
+References: https://arxiv.org/abs/1908.05228
 
 ## Build your own template: Instructions
 Take a look at Figure 1 in the Paper.
