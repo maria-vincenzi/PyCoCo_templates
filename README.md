@@ -9,7 +9,7 @@ You will need:
 ## Build your own template: Instructions
 Take a look at Figure 1 in the Paper.
 
-![[Optional Text]](./pycoco_code_structure.pdf)
+![Imgur](pycoco_code_structure.pdf)
 
 Each step of the process corresponds to a jupyter notebook in the folder ./Codes.
 
