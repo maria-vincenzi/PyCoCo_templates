@@ -11,10 +11,16 @@ You will need:
 **STEP 0**: Clone this github repo and set the envoimental variable COCO_PATH to the path where you cloned the folder
 i.e. export COCO_PATH="/Users/mariavincenzi/PyCoCo_templates/"
 
-**STEP 1**:
+**STEP 1**: Prepare Inputs.
 
 All the inputs (Photometry, Spectroscopy, Other info about the transient like Galactic/host extinction, Redshift...), Filter transmission function) should be placed in ./Inputs
-See example provided to check which format all these info should be provided.
+
+You essentially need to do 3 things before you start running the code:
+
+1) In the folder `<./Inputs/Photometry/0_LCs_mags_raw>` place your photometry in magnitudes. See example to check the column format. If your photometry is already in flux or is already dust corrected (or you don’t want to dust correct it) and/or is already extended at early/late time (or you don’t want to extend it at early/late times) just skip all these step, do not run the first 4 notebooks and place the photometry directly in `<./Inputs/Photometry/Final_LCs_FULLY_EXTENDED>`
+2) In the folder `<./Inputs/Spectroscopy/1_spec_lists_original>` place for each template a file with the list of the spectra. See example to check the column format and file name. In the folder `<./Inputs/Spectroscopy/1_spec_original>` place the actual files with the spectra. See example to check the format of the spectra. If you want to smooth the spectra use the provided notebook. Otherwise skip this and put list and spectra in the folders `<./Inputs/Spectroscopy/2_spec_lists_smoothed>` and `<./Inputs/Spectroscopy/2_spec_smoothed>` .
+3) Modify file `<./Inputs/SNe_info/info.dat>` and add a row for each new template you want to build.
+See example provided to see the format all these info should be provided.
 
 All the outputs (LC fit, mangled spectra, various plots and final template) will be created in Outputs.
 
