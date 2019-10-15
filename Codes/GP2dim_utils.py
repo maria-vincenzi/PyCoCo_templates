@@ -100,7 +100,7 @@ def transform2LOG_reshape(GP2DIM_Class, raw_numbers, raw_numbers_err,  off_xa, o
 
 
 def make_plots(GP2DIM_Class, y_data_nonan, y_data_nonan_err, x1_data_norm, x2_data_norm):	
-	fig=plt.figure(1, figsize=(10,3))
+	fig=plt.figure(1, figsize=(12,3))
 
 	plt.subplot(121)
 	plt.xlabel('MJD')
@@ -115,8 +115,8 @@ def make_plots(GP2DIM_Class, y_data_nonan, y_data_nonan_err, x1_data_norm, x2_da
 	#plt.savefig('gaussian_processes_2d_training_data.png', bbox_inches='tight')
 	
 	plt.subplot(122)
-	plt.xlabel('MJD')
-	plt.ylabel('wls')
+	plt.xlabel('Time (MJDs)')
+	plt.ylabel('Wavelength')
 	#plt.xlim(x1_min,x1_max)
 	#plt.ylim(x2_min,x2_max)
 	plt.title('Training Data ERRORS')
@@ -124,25 +124,27 @@ def make_plots(GP2DIM_Class, y_data_nonan, y_data_nonan_err, x1_data_norm, x2_da
 	plt.grid(True)
 		
 	plt.scatter(GP2DIM_Class.grid_norm_info['norm2']*x2_data_norm, 
-		GP2DIM_Class.grid_norm_info['norm1']*x1_data_norm,  marker='s', s=9, c=np.log10(y_data_nonan_err))
+		GP2DIM_Class.grid_norm_info['norm1']*x1_data_norm,  marker='s', s=9, c=(y_data_nonan_err))
 	plt.colorbar(label='Err Flux rescaled')
+	plt.subplots_adjust(wspace=0.2)
 	plt.show()
 	fig.savefig(GP2DIM_Class.save_plot_path+'/data_for2d_interpolation.pdf', bbox_inches='tight')
 	plt.close(fig)
 	
-def setPRIOR(GP2DIM_Class, type_):
-
+def setPRIOR(GP2DIM_Class, type_=None, PRIOR_file=None, PRIOR_folder=None):
 	norm1 = GP2DIM_Class.grid_norm_info['norm1']
 	norm2 = GP2DIM_Class.grid_norm_info['norm2']
 	offset = GP2DIM_Class.grid_norm_info['offset']
 	offset2 = GP2DIM_Class.grid_norm_info['offset2']
 	scale_factor = GP2DIM_Class.grid_norm_info['scale_factor']
-
-	if type_ in ['II', 'IIn', 'IIP', 'IIL']:
-		PRIOR = '/Users/mariavincenzi/PhD/pycoco_2/ipython_notebook test/prior_Hrich.txt'
-	else:
-		PRIOR = '/Users/mariavincenzi/PhD/pycoco_2/ipython_notebook test/prior_SE.txt'
-	wls_prior, phase_prior, color_prior = np.genfromtxt(PRIOR, delimiter=',', unpack=True)
+	
+	if not PRIOR_file:
+		if type_ in ['II', 'IIn', 'IIP', 'IIL']:
+			PRIOR_file = '/prior_Hrich.txt'
+		elif type_ in ['Ib', 'Ic', 'Ibc', 'Ic-BL', 'IcBL', 'IIb']:
+			PRIOR_file = '/prior_SE.txt'
+		else: print ('Specify a PRIOR please')
+	wls_prior, phase_prior, color_prior = np.genfromtxt(PRIOR_folder+PRIOR_file, delimiter=',', unpack=True)
 	wls_prior_norm = wls_prior/norm1
 	
 	#DATALC_PATH+'/results_template/%s/fitted_phot_%s.dat'%(snname,snname)
@@ -179,6 +181,7 @@ def run_2DGP_GRID(GP2DIM_Class, y_data_nonan, y_data_nonan_err, x1_data_norm, x2
 
 	# TRAINING: X, y, terr
 	norm1 = GP2DIM_Class.grid_norm_info['norm1']
+	norm2 = GP2DIM_Class.grid_norm_info['norm2']
 
 	if prior:
 		from george.modeling import Model
@@ -189,8 +192,7 @@ def run_2DGP_GRID(GP2DIM_Class, y_data_nonan, y_data_nonan_err, x1_data_norm, x2
 				points_eval = np.array([tup for tup in zip(t[:,0], t[:,1])])
 				grid_z1 = griddata(points, values, points_eval, method='nearest')
 				grid_z1[np.isnan(grid_z1)] = 0.
-				plt.plot(t[:,0]*norm1, grid_z1, '-b', label='PRIOR')
-				#if grid_z1.shape[0]>1000: plt.show()
+				#plt.plot(t[:,0]*norm1, grid_z1, '-b', label='PRIOR')
 				return grid_z1
     	
 		mean_model = Model_2dim()
@@ -214,12 +216,6 @@ def run_2DGP_GRID(GP2DIM_Class, y_data_nonan, y_data_nonan_err, x1_data_norm, x2
 	mu_fill_resh = []
 	std_fill_resh = []
 	
-	# check that extrapolation is not over 200 new spectra
-	#if (len(extrap_mjds)>200):
-	#	 extrap_mjds = grid_ext.columns.values[:200]
-	#if (max(extrap_mjds-min(extrap_mjds))>200):
-	#	 extrap_mjds = extrap_mjds[extrap_mjds-min(extrap_mjds)<200]
-	 
 	slot_size = 3
 	tot_iteration = int(len(extrap_mjds)/slot_size+1)
 
@@ -240,14 +236,21 @@ def run_2DGP_GRID(GP2DIM_Class, y_data_nonan, y_data_nonan_err, x1_data_norm, x2
 			print (j, 'of', int(len(extrap_mjds)/slot_size+1))
 		frac_tot_iteration = int(20.*(j+1)/tot_iteration)
 		#print('[','*'*frac_tot_iteration,' '*(20-frac_tot_iteration),']' + ' %i of %i'%(slot_size*(j+1),slot_size*tot_iteration)+' spec extrapolated', end='\r')
-
 		mu_iter, cov_iter = (gp.predict(y, X_fill, return_cov=True))
 		std_iter = np.sqrt(np.diag(cov_iter))
-		
-		plt.plot(x1_fill*norm1, mu_iter, '-k', label='PREDICTION')
-		#plt.grid()
-		#plt.legend()
-		plt.show()
+		count=0
+		for mj in mjd_normed_range:
+			fig = plt.figure(figsize=(8,2))
+			plt.subplot(1,count+1,slot_size)
+			plt.plot(norm1*x1_fill[x2_fill==mj], mu_iter[x2_fill==mj], '-k', label='PREDICTION')
+			points_eval = np.array([tup for tup in zip(x1_fill[x2_fill==mj], x2_fill[x2_fill==mj])])
+			grid_z1 = griddata(points, values, points_eval, method='nearest')
+			grid_z1[np.isnan(grid_z1)] = 0.
+			plt.plot(norm1*x1_fill[x2_fill==mj], grid_z1, '-b', label='PRIOR')
+			plt.legend()
+			plt.show()
+			plt.close(fig)
+			count=count+1
 
 		mu_resh_iter = mu_iter.reshape(len(wls_normed_range), len(mjd_normed_range))
 		std_resh_iter = std_iter.reshape(len(wls_normed_range), len(mjd_normed_range))
