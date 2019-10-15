@@ -24,7 +24,9 @@ You essentially need to do 3 things before you start running the code:
 
 See example provided to see the format all these info should be provided.
 
-4) (optional) In the folder `./Inputs/2DIM_priors` you find the surface prior for Stripped Envelope SNe, Hydrogen-rich SNe (basically Type II) and IIn SNe. If you want to use another prior for the 2-dim GP modelling, add it here and specify which prior you want to use in the notebook `./Codes/6_TwoDim_UVExtend_Extrapolate.ipynb`
+4) (optional) In the folder `./Inputs/2DIM_priors` you find the surface prior for Stripped Envelope SNe, Hydrogen-rich SNe (basically Type II)
+ and IIn SNe. If you want to use another prior for the 2-dim GP modelling, add it in the `./Inputs/2DIM_priors` folder  and specify which prior file
+ you want to use in the notebook `./Codes/6_TwoDim_UVExtend_Extrapolate.ipynb`
 
 All the outputs (LC fit, mangled spectra, various plots and final template) will be created in Outputs.
 
