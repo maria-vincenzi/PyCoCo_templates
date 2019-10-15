@@ -5,7 +5,7 @@ References: https://arxiv.org/abs/1908.05228
 
 You will need:
 - Python3 and all the basics packages (numpy, scipy ..)
-- The Pakcage george (version 0.3.1 at least, https://george.readthedocs.io/en/latest/)
+- The Package **george** (version 0.3.1 at least, https://george.readthedocs.io/en/latest/)
 
 ### Build your own template: Instructions
 
@@ -28,6 +28,7 @@ See example provided to see the format all these info should be provided.
  and IIn SNe. If you want to use another prior for the 2-dim GP modelling, add it in the `./Inputs/2DIM_priors` folder  and specify which prior file
  you want to use in the notebook `./Codes/6_TwoDim_UVExtend_Extrapolate.ipynb`
 
+**STEP 2**: 
 All the outputs (LC fit, mangled spectra, various plots and final template) will be created in Outputs.
 
 Take a look at Figure 1 in the Paper.
