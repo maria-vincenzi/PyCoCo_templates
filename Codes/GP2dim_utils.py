@@ -243,10 +243,11 @@ def run_2DGP_GRID(GP2DIM_Class, y_data_nonan, y_data_nonan_err, x1_data_norm, x2
 			fig = plt.figure(figsize=(8,2))
 			plt.subplot(1,count+1,slot_size)
 			plt.plot(norm1*x1_fill[x2_fill==mj], mu_iter[x2_fill==mj], '-k', label='PREDICTION')
-			points_eval = np.array([tup for tup in zip(x1_fill[x2_fill==mj], x2_fill[x2_fill==mj])])
-			grid_z1 = griddata(points, values, points_eval, method='nearest')
-			grid_z1[np.isnan(grid_z1)] = 0.
-			plt.plot(norm1*x1_fill[x2_fill==mj], grid_z1, '-b', label='PRIOR')
+			if prior:
+				points_eval = np.array([tup for tup in zip(x1_fill[x2_fill==mj], x2_fill[x2_fill==mj])])
+				grid_z1 = griddata(points, values, points_eval, method='nearest')
+				grid_z1[np.isnan(grid_z1)] = 0.
+				plt.plot(norm1*x1_fill[x2_fill==mj], grid_z1, '-b', label='PRIOR')
 			plt.legend()
 			plt.show()
 			plt.close(fig)
@@ -482,7 +483,7 @@ def transform_back_andPlot(GP2DIM_Class, x1_fill, x2_fill, mu_fill, std_fill, y_
 
 
 def save_plots_files(GP2DIM_Class, list_mjds_tot, y_data_conv, x1_fill, x2_fill, mu_fill_conv, std_fill_conv):
-	results_directory = GP2DIM_Class.main_path+'/results_template/%s/'%GP2DIM_Class.snname
+	results_directory = GP2DIM_Class.save_plot_path
 	norm1 = GP2DIM_Class.grid_norm_info['norm1']
 	norm2 = GP2DIM_Class.grid_norm_info['norm2']
 	offset = GP2DIM_Class.grid_norm_info['offset']
@@ -538,7 +539,7 @@ def save_plots_files(GP2DIM_Class, list_mjds_tot, y_data_conv, x1_fill, x2_fill,
 
 			plt.text(ext_spec_wls[0], (a+1)*scale, '%.2f'%(mj-min_mjd))
 			# write the file
-			fout = open(results_directory+'TwoDextended_spectra'+'/%.2f_spec_extended.txt'%mj, 'w')
+			fout = open(results_directory+'/%.2f_spec_extended.txt'%mj, 'w')
 			fout.write('#wls\tflux\tfluxerr\n')
 			for w,f,ferr in zip(ext_spec_wls, ext_spec_flx,ext_spec_flx_err):
 				fout.write('%E\t%E\t%E\n'%(w,f,ferr))
@@ -550,7 +551,7 @@ def save_plots_files(GP2DIM_Class, list_mjds_tot, y_data_conv, x1_fill, x2_fill,
 							 (smooth_ext_spec+smooth_ext_spec_err)+(a+1)*scale,
 							 alpha=0.3, facecolor='r')
 			plt.text(wls[0], (a+1)*scale, '%.2f'%(mj-min_mjd))
-			fout = open(results_directory+'TwoDextended_spectra'+'/%.2f_spec_extended_FL.txt'%mj, 'w')
+			fout = open(results_directory+'/%.2f_spec_extended_FL.txt'%mj, 'w')
 			fout.write('#wls\tflux\tfluxerr\n')
 			for w,f,ferr in zip(wls, smooth_ext_spec, smooth_ext_spec_err):
 				fout.write('%E\t%E\t%E\n'%(w,f,ferr))
