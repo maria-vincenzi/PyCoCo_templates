@@ -241,7 +241,7 @@ def run_2DGP_GRID(GP2DIM_Class, y_data_nonan, y_data_nonan_err, x1_data_norm, x2
 		count=0
 		for mj in mjd_normed_range:
 			fig = plt.figure(figsize=(8,2))
-			plt.subplot(1,count+1,slot_size)
+			plt.subplot(1,slot_size,count+1)
 			plt.plot(norm1*x1_fill[x2_fill==mj], mu_iter[x2_fill==mj], '-k', label='PREDICTION')
 			if prior:
 				points_eval = np.array([tup for tup in zip(x1_fill[x2_fill==mj], x2_fill[x2_fill==mj])])
