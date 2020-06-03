@@ -7,6 +7,15 @@ You will need:
 - Python3 and all the basics packages (numpy, scipy ..)
 - The Package **george** (version 0.3.1 at least, https://george.readthedocs.io/en/latest/)
 
+### How to use the templates from V19
+*Templates in SNANA*(https://github.com/RickKessler/SNANA).
+The templates are already built in SNANA.
+Take a look at SNDATA_ROOT/sample_input_files/V19_CC to see an example of how to run an SNANA simulation using the V19 templates
+*Templates in SNcosmo*  (https://github.com/sncosmo/sncosmo)
+The templates are not built in sncosmo yet! Sorry!
+Hopefully this will change soon. In the meantime you can take a look at the code register_SNcosmo.py . This code allows you to upload all the templates and register them in sncosmo i.e. add them to the list of built-in models. This few lines of code are super quick and easy to run, however you will have to re-run them everytime you do "import sncosmo". So this is not the ideal solution..
+I also included an handy dictionary that associates template name to type.
+
 ### Build your own template: Instructions
 
 **STEP 0**: Clone this github repo and set the envoimental variable COCO_PATH to the path where you cloned the folder
