@@ -10,11 +10,10 @@ You will need:
 ### How to use the templates from V19
 *Templates in SNANA*(https://github.com/RickKessler/SNANA).
 The templates are already built in SNANA.
-Take a look at SNDATA_ROOT/sample_input_files/V19_CC to see an example of how to run an SNANA simulation using the V19 templates
+Take a look at SNDATA_ROOT/sample_input_files/V19_CC to see an example of how to generate SNANA simulation using the V19 templates
 *Templates in SNcosmo*  (https://github.com/sncosmo/sncosmo)
-The templates are not built in sncosmo yet! Sorry!
-Hopefully this will change soon. In the meantime you can take a look at the code register_SNcosmo.py . This code allows you to upload all the templates and register them in sncosmo i.e. add them to the list of built-in models. This few lines of code are super quick and easy to run, however you will have to re-run them everytime you do "import sncosmo". So this is not the ideal solution..
-I also included an handy dictionary that associates template name to type.
+The templates are in sncosmo!
+Take a look at the sncosmo documentation to learn how to use them.
 
 ### Build your own template: Instructions
 
